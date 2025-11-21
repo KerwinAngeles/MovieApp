@@ -3,21 +3,23 @@ import React from 'react';
 import { Image, TextInput, View } from 'react-native';
 
 interface Props {
-    placeholder: string,
     onPress?: () => void;
+    placeholder?: string;
+    value?: string;
+    onChangeText?: (text: string) => void;
 }
 
-const SearchBar = ({onPress, placeholder}: Props) => {
+const SearchBar = ({placeholder, value, onChangeText, onPress }: Props) => {
   return (
-    <View className='flex-row self-center items-center bg-dark-200 rounded-full px-10 py-5'>
-      <Image source={icons.search} className='size-5 px-5' resizeMode='contain' tintColor='#ab8bff'/>
+    <View className='flex-row self-center items-center bg-dark-200 rounded-full px-4 py-1'>
+      <Image source={icons.search} resizeMode='contain' tintColor='#ab8bff'/>
       <TextInput
-        onPress={onPress}
+        value={value}
         placeholder={placeholder}
-        value=''
-        onChangeText={() => {}}
+        onChangeText={onChangeText}
         placeholderTextColor="#a8b5db"
         className='flex-1 ml-2 text-white'
+        onPress={onPress}
       />
     </View>
   )

@@ -1,30 +1,28 @@
-import { icons } from '@/constants/icons'
-import { images } from '@/constants/images'
-import { Tabs } from 'expo-router'
-import React from 'react'
-import { Image, ImageBackground, ImageSourcePropType, Text, View } from 'react-native'
-
+import { Ionicons } from '@expo/vector-icons';
+import { Tabs } from 'expo-router';
+import React from 'react';
+import { View } from 'react-native';
+type IoniconName = React.ComponentProps<typeof Ionicons>["name"];
 const TabIcon = ({ focused, title, icon }: {
   focused: boolean,
   title: string,
-  icon: ImageSourcePropType
+  icon: IoniconName
 }) => {
   if (focused) {
-    return (<ImageBackground
-      source={images.highlight}
-      className='flex flex-row w-full flex-1 min-w-[114px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden'
+    return (<View
+      className='flex flex-col w-full flex-1 min-w-[100px] min-h-16 mt-8 justify-center items-center rounded-full overflow-hidden'
     >
-      <Image source={icon} className='size-5' tintColor="#151312" />
-      <Text className='text-secondary text-base font-semibold ml-2'>{title}</Text>
-    </ImageBackground>)
+
+      <Ionicons name={icon} size={24} color="#ffffff" />
+    </View>)
   }
 
   return (
-    <View className='size-full justify-center items-center mt-4 rounded-full'>
-      <Image source={icon} className='size-5' tintColor="#A8B5DB" />
+    <View className='flex flex-col flex-1 w-full min-w-[100px] min-h-16 justify-center items-center mt-8 rounded-full overflow-hidden'>
+      <Ionicons name={icon} size={24} color="#151312" />
     </View>
   )
-
+ 
 }
 
 const _layout = () => {
@@ -42,9 +40,9 @@ const _layout = () => {
         tabBarStyle: {
           backgroundColor: '#0f0d23',
           borderRadius: 50,
-          marginHorizontal: 20,
-          marginBottom: 36,
-          height: 54,
+          marginHorizontal: 60,
+          marginBottom: 20,
+          height: 65,
           position: 'absolute',
           overflow: 'hidden',
           borderWidth: 0,
@@ -53,6 +51,7 @@ const _layout = () => {
         }
       }}
     >
+
       <Tabs.Screen
         name="index"
         options={
@@ -63,7 +62,7 @@ const _layout = () => {
               <TabIcon
                 focused={focused}
                 title="Home"
-                icon={icons.home}
+                icon="home"
               />
             )
           }}
@@ -80,7 +79,7 @@ const _layout = () => {
               <TabIcon
                 focused={focused}
                 title="Search"
-                icon={icons.search}
+                icon="search"
               />
             )
           }}
@@ -97,14 +96,13 @@ const _layout = () => {
               <TabIcon
                 focused={focused}
                 title="Saved"
-                icon={icons.save}
+                icon="heart"
               />
             )
           }}
       />
 
-
-
+      
       <Tabs.Screen
         name="profile"
         options={
@@ -115,7 +113,24 @@ const _layout = () => {
               <TabIcon
                 focused={focused}
                 title="Profile"
-                icon={icons.person}
+                icon="person"
+              />
+            )
+          }}
+      />
+
+
+      <Tabs.Screen
+        name="setting"
+        options={
+          {
+            title: 'Setting',
+            headerShown: false,
+            tabBarIcon: ({ focused }) => (
+              <TabIcon
+                focused={focused}
+                title="Setting"
+                icon="settings"
               />
             )
           }}
