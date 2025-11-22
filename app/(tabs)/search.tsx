@@ -27,7 +27,7 @@ const search = () => {
       } else {
         reset
       }
-    }, 500)
+    }, 1000)
 
     return () => clearTimeout(timeOutId)
   }, [searchQuery])
