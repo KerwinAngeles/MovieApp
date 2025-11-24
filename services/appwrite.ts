@@ -32,14 +32,11 @@ export const updateSearchMovie = async (query: string, movie: Movie) => {
             title: movie.title
         }).select();
 
-    console.log("Error: " + error?.message)
-    console.log("Data: " + data)
-
     return { data, error }
 }
 
 
-export const getTrendingMovies = async (limit = 10): Promise<TrendingMovie[] | undefined >=> {
+export const getTrendingMovies = async (limit = 10): Promise<TrendingMovie[] | undefined> => {
     try {
         const { data, error } = await supabase
             .from("metrics")
@@ -52,6 +49,75 @@ export const getTrendingMovies = async (limit = 10): Promise<TrendingMovie[] | u
         console.log(error)
         return undefined;
     }
-
 }
 
+export const AllLikeMovies = async (): Promise<Likes[]> => {
+    try{
+        const {data, error} = await supabase 
+        .from("likes")
+        .select("*")
+        console.log(data);
+        return data as unknown as Likes[]
+    }catch(error){
+        console.log(error)
+        throw error
+    }
+}
+
+export const likeMovie = async (movie: Movie): Promise<Likes> => {
+    try {
+        console.log("movie Id " + movie.id)
+        const { data, error } = await supabase
+            .from("likes")
+            .upsert({
+                movie_id: movie.id,
+                islike: true,
+                title: movie.title,
+                poster_path: movie.poster_path,
+                popularity: movie.popularity
+            },
+            { onConflict: "movie_id" }
+        ).select()
+        
+        console.log(data)
+        console.log(error)
+        return data as unknown as Likes
+
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
+export const dislikeMovie = async (movieId: string): Promise<Likes> => {
+    try {
+        console.log("movie Id " + movieId)
+        const { data, error } = await supabase
+            .from("likes")
+            .update({
+                islike: false
+            })
+            .eq("movie_id", movieId)
+
+        return data as unknown as Likes
+
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
+export const getLikeMovie = async (movieId: string): Promise<Likes> => {
+    try {
+        const { data, error } = await supabase
+            .from("likes")
+            .select("*")
+            .eq("movie_id", movieId)
+            .maybeSingle()
+
+        return data as Likes
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}

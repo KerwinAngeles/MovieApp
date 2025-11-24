@@ -75,3 +75,16 @@ interface TrendingCardProps {
   movie: TrendingMovie;
   index: number;
 }
+
+interface TopRateMovieProps {
+  movie: Movie;
+  index: number
+}
+
+interface Likes {
+  movie_id: string;
+  islike: boolean;
+  title: string;
+  poster_path: string;
+  popularity: number
+}

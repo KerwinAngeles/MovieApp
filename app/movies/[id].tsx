@@ -1,16 +1,18 @@
 import { icons } from '@/constants/icons';
 import useFetch from '@/hooks/useFetch';
 import { fetchMoviesDetail } from '@/services/api';
+import { dislikeMovie, getLikeMovie, likeMovie } from '@/services/appwrite';
+import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import React from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-
+import React, { useEffect, useState } from 'react';
+import { Image, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 interface MovieInfoProp {
   label: string;
   value: string | number | null
 }
 
 const MovieInfo = ({ label, value }: MovieInfoProp) => {
+
   return (
     <View className='flex-col items-start justify-start mt-5'>
       <Text className='text-light-100 font-normal text-sm'>
@@ -25,9 +27,25 @@ const MovieInfo = ({ label, value }: MovieInfoProp) => {
 }
 
 const MovieDetails = () => {
-
   const { id } = useLocalSearchParams();
+  const [isLike, setIsLike] = useState(false);
   const { data: movie, loading } = useFetch(() => fetchMoviesDetail(id as string))
+  const { data: likesMovies } = useFetch(() => getLikeMovie(id as string))
+  useEffect(() => {
+    if (likesMovies?.islike !== undefined) {
+      setIsLike(likesMovies.islike);
+    }
+  }, [likesMovies]);
+
+  const handlePress = async () => {
+    if (!isLike) {
+      await likeMovie(movie);
+      setIsLike(true);
+    } else {
+      await dislikeMovie(movie?.id);
+      setIsLike(false);
+    }
+  }
 
   return (
     <View className='bg-primary flex-1'>
@@ -49,6 +67,14 @@ const MovieDetails = () => {
           <Text className='text-white font-bold text-xl'>
             {movie?.title}
           </Text>
+          <Pressable onPress={handlePress}>
+            {isLike
+              ?
+              <Ionicons name="heart" size={18} color="#9d0208" />
+
+              : <Ionicons name="heart-outline" size={18} color="#fff" />}
+          </Pressable>
+
           <View className='flex-row items-center gap-x-2 mt-2'>
             <Text className='text-light-300 text-sm'>
               {movie?.release_date?.split('-')[0]}
