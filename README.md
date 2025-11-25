@@ -29,7 +29,6 @@ La aplicación cuenta con un diseño moderno y minimalista con:
 - **Expo Router** para navegación
 - **Appwrite** para backend y almacenamiento
 - **TMDB API** para datos de películas
-
 ---
 
 *Disfruta explorando el mundo del cine con MovieApp* 🍿 
@@ -37,4 +36,6 @@ La aplicación cuenta con un diseño moderno y minimalista con:
 <div align="center">
   <img src="image.png" alt="MovieApp Screenshot 1" width="300" />
   <img src="image-1.png" alt="MovieApp Screenshot 2" width="300" />
+  <img src="image-2.png" alt="MovieApp Screenshot 2" width="300" />
+
 </div>
