@@ -33,5 +33,8 @@ La aplicación cuenta con un diseño moderno y minimalista con:
 ---
 
 *Disfruta explorando el mundo del cine con MovieApp* 🍿 
-![alt text](image.png)
-![alt text](image-1.png)
+
+<div align="center">
+  <img src="image.png" alt="MovieApp Screenshot 1" width="300" />
+  <img src="image-1.png" alt="MovieApp Screenshot 2" width="300" />
+</div>
